@@ -9,7 +9,7 @@ import java.util.*;
 public class BoundedStack {
 
     private final List<String> books; //private final String[] elements;
-    private final int bookshelf ;
+    private final int bookshelf = 50;
     private final List<String> ISBN;
 
     //  representation
@@ -35,7 +35,7 @@ public class BoundedStack {
     //CheckReq
     
     private void checkrep(){
-        
+        assert ISBN != null : "ISBN is not null";
     }
 
     // ----- Creator -----
@@ -45,9 +45,9 @@ public class BoundedStack {
      * @param capacity รายชื่อหนังสือ ต้องไม่ซ้ำกันและไม่เกิน capacity
      * @throws IllegalArgumentException 
      */
-    public BoundedStack(int capacity){
+public BoundedStack(/*int capacity*/){
         this.books = new ArrayList<>();
-        this.bookshelf = capacity;
+        //this.bookshelf = capacity;
         this.ISBN = new ArrayList<>();
 
     }
@@ -70,4 +70,16 @@ public class BoundedStack {
     public void remove(String s){
 
     }
+
+    // ----- Observers -----
+
+
+
+
+
+
+    // ----- Producers -----
+
+
+
 }

@@ -8,25 +8,34 @@ import java.util.*;
  */
 public class BoundedStack {
 
-    private final List<String> elements;
-    private final int capacity;
+    private final List<String> books; //private final String[] elements;
+    private final int bookshelf ;
 
     //  representation
 
     //Abstraction Function:
-    //  AF(elements,capacity) = 
-    //RI
+    //  AF(books,bookshelf) = หนังสือที่เก็บอยู่ในชั้นหนังสือตามลำดับตัวอักษร 
 
+    //Representation Invariant :
+    //  ชั้นหนังสือต้องไม่ว่าง != null
+    //  ไม่มีชั้นหนังสือใดเป็น null
+    //  ไม่มีหนังสือเป็นสตริงว่าง
+    //  หนังสือเรียงตามตัวอักษรตัวแรก
+    //  หนังสือต้องไม่เป็นตัวอักษรพิเศษ
+    //  มีหนังสือในชั้นได้ไม่เกิน 50 เล่ม
 
+    // ----- Creator -----
     /**
      * 
-     * @param capacity
+     * @param capacity รายชื่อหนังสือเริ่มต้น ต้องไม่ซ้ำกันและไม่เกิน capacity
+     * @thrown IllegalArgumentException 
      */
-    public BoundedStack(int capacity){ //creator
-        this.elements = new ArrayList<>();
-        this.capacity = capacity;
+    public BoundedStack(int capacity){
+        this.books = new ArrayList<>();
+        this.bookshelf = capacity;
     }
 
+    // ----- Mutators -----
     /**
      * 
      * @param s

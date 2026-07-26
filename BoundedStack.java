@@ -1,65 +1,62 @@
 import java.util.*;
 
 /**
- * BoundedStack - ADT ชั้นหนังสือที่เก็บรายชื่อหนังสือ
+ * BoundedStack - ADT แทนรายการหนังสือที่ผู้ใช้ต้องการอ่าน
  * 
- * ค่านามธรรม (A) : ลำดับหนังสือบนชั้นหนังสือ เช่น [หนังสือA, หนังสือB, หนังสือC]
+ * ค่านามธรรม (A) : ลำดับของหนังสือที่ผู้ใช้ต้องการอ่าน เช่น [หนังสือA, หนังสือB, หนังสือC]
  * 
  */
 public class BoundedStack {
 
-    private final List<String> books; //private final String[] elements;
-    private final int bookshelf = 50;
-    private final List<String> ISBN;
+    private final List<String> Listbooks; //private final String[] elements;
+    private final int capacity ;
 
     //  representation
 
     //Abstraction Function:
-    //  AF(books,bookshelf) = หนังสือที่เก็บอยู่ในชั้นหนังสือตามลำดับตัวอักษร 
+    //  AF(books) = รายการหนังสือที่ผู้ใช้ต้องการอ่านตามลำดับใน books
 
     //Representation Invariant :
-    //  ISBN ต้องไม่ซ้ำกัน
-    //  ชั้นหนังสือต้องไม่ว่าง != null
-    //  ไม่มีชั้นหนังสือใดเป็น null
-    //  ไม่มีหนังสือเป็นสตริงว่าง
-    //  หนังสือเรียงตามตัวอักษรตัวแรก
-    //  หนังสือต้องไม่เป็นตัวอักษรพิเศษ
-    //  หนังสือมีเลข ISBN ไม่ซ้ำกัน
-    //  มีหนังสือในชั้นได้ไม่เกิน 50 เล่ม
+    //  books ต้องไม่เป็น null
+    //  books ต้องมากกว่าหรือเท่ากับ 0
+    //  ไม่มีหนังสือเป็น null
+    //  ไม่มีชื่อหนังสือเป็นสตริงว่าง
+    //  ชื่อหนังสือต้องไม่ยาวเกิน 100 ตัวอักษร
+    //  ชื่อหนังสือไม่ซ้ำกัน
+    //  มีหนังสือใน books ได้ไม่เกิน capacity
 
     //Safety from rep exposure:
     //  books เป็น private final
-    //  ISBN เป็น private final
-    //  คัดลอกข้อมูลทั้งขาาเข้าขาออก
+    //  คัดลอกข้อมูลทั้งขาเข้าขาออก
 
     //CheckReq
-    
     private void checkrep(){
-        assert ISBN != null : "ISBN is not null";
+        assert Listbooks != null : "books is not null";
+        assert Listbooks.size() <= this.capacity : "มีหนังสือได้ไม่เกิน capacity";
+
     }
 
     // ----- Creator -----
 
     /**
      * 
-     * @param capacity รายชื่อหนังสือ ต้องไม่ซ้ำกันและไม่เกิน capacity
+     * 
      * @throws IllegalArgumentException 
      */
-public BoundedStack(/*int capacity*/){
-        this.books = new ArrayList<>();
-        //this.bookshelf = capacity;
-        this.ISBN = new ArrayList<>();
+public BoundedStack(int capacity){
+        this.Listbooks = new ArrayList<>();
+        this.capacity = capacity;
 
     }
 
     // ----- Mutators -----
     /**
      * 
-     * @param s หนังสือต้อง ไม่เป็น null, ไม่เป็นสตริงว่าง และ ไม่เป็นตัวอักษรพิเศษ
+     * @param s books ไม่เป็น null, ไม่เป็นสตริงว่าง 
      * @return true ถ้าเพิ่มสำเร็จ, false ถ้าชั้นหนังสือเต็มหรือมีหนังสือนี้อยู่แล้ว
      * @throws IIllegalArgumentException ถ้า 
      */
-    public void add(String s){
+    public void push(String s){
 
     }
 
@@ -67,7 +64,7 @@ public BoundedStack(/*int capacity*/){
      * 
      * @param s
      */
-    public void remove(String s){
+    public void pop(){
 
     }
 

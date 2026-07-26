@@ -14,26 +14,33 @@ public class BoundedStack {
     //  representation
 
     //Abstraction Function:
-    //  AF(books) = รายการหนังสือที่ผู้ใช้ต้องการอ่านตามลำดับใน books
+    //  AF(Listbooks) = รายการหนังสือที่ผู้ใช้ต้องการอ่านตามลำดับใน Listbooks
 
     //Representation Invariant :
-    //  books ต้องไม่เป็น null
-    //  books ต้องมากกว่าหรือเท่ากับ 0
-    //  ไม่มีหนังสือเป็น null
-    //  ไม่มีชื่อหนังสือเป็นสตริงว่าง
-    //  ชื่อหนังสือต้องไม่ยาวเกิน 100 ตัวอักษร
+    //  Listbooks ต้องไม่เป็น null //
+    //  จำนวนหนังสือใน Listbooks ต้องมากกว่าหรือเท่ากับ 0 //
+    //  ไม่มีหนังสือเป็น null //
+    //  ไม่มีชื่อหนังสือเป็นสตริงว่าง //
+    //  ชื่อหนังสือต้องไม่ยาวเกิน 100 ตัวอักษร //
     //  ชื่อหนังสือไม่ซ้ำกัน
-    //  มีหนังสือใน books ได้ไม่เกิน capacity
+    //  มีหนังสือใน Listbooks ได้ไม่เกิน capacity //
 
     //Safety from rep exposure:
-    //  books เป็น private final
+    //  Listbooks เป็น private final
     //  คัดลอกข้อมูลทั้งขาเข้าขาออก
 
     //CheckReq
     private void checkrep(){
-        assert Listbooks != null : "books is not null";
-        assert Listbooks.size() <= this.capacity : "มีหนังสือได้ไม่เกิน capacity";
-
+        assert Listbooks != null : "Listbooks is not null";
+        assert Listbooks.size() >= 0 : "Listbooks มากกว่า 0";
+        assert Listbooks.size() <= this.capacity : "มีหนังสือไม่เกิน capacity";
+        Set<String> seen = new HashSet<>();
+        for (String b : Listbooks){ //วนลูปใน Listbooks จนหมด
+            assert b != null: "ชื่อหนังสือไม่เป็น null";
+            assert !b.isEmpty(): "หนังสือว่าง";
+            assert b.length() <= 100: "ชื่อหนังสือความยาวเกิน 100 ตัวอักษร";
+            assert seen.add(b) : "ชื่อหนังสือซ้ำ : " + b; //วนเก็บหนังสือเรื่อยๆ ถ้าเจอซ้ำคือ false
+        }
     }
 
     // ----- Creator -----

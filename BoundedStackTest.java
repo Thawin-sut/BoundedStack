@@ -17,6 +17,14 @@ public class BoundedStackTest {
     }
 
     public static void main(String[] args) {
+        boolean assertsOn = false;
+        assert assertsOn = true;
+        if (!assertsOn) {
+            System.out.println("WARNING: assertions disabled"
+                    + " - re-run with: java -ea PlaylistTest\n");
+        }
+
+
         
     }
 }

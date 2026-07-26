@@ -8,34 +8,34 @@ import java.util.*;
  */
 public class BoundedStack {
 
-    private final List<String> Listbooks; //private final String[] elements;
+    private final List<String> listBooks; //private final String[] elements;
     private final int capacity ;
 
     //  representation
 
     //Abstraction Function:
-    //  AF(Listbooks) = รายการหนังสือที่ผู้ใช้ต้องการอ่านตามลำดับใน Listbooks
+    //  AF(listBooks) = รายการหนังสือที่ผู้ใช้ต้องการอ่านตามลำดับใน listBooks
 
     //Representation Invariant :
-    //  Listbooks ต้องไม่เป็น null //
-    //  จำนวนหนังสือใน Listbooks ต้องมากกว่าหรือเท่ากับ 0 //
+    //  listBooks ต้องไม่เป็น null //
+    //  จำนวนหนังสือใน listBooks ต้องมากกว่าหรือเท่ากับ 0 //
     //  ไม่มีหนังสือเป็น null //
     //  ไม่มีชื่อหนังสือเป็นสตริงว่าง //
     //  ชื่อหนังสือต้องไม่ยาวเกิน 100 ตัวอักษร //
     //  ชื่อหนังสือไม่ซ้ำกัน
-    //  มีหนังสือใน Listbooks ได้ไม่เกิน capacity //
+    //  มีหนังสือใน listBooks ได้ไม่เกิน capacity //
 
     //Safety from rep exposure:
-    //  Listbooks เป็น private final
+    //  listBooks เป็น private final
     //  คัดลอกข้อมูลทั้งขาเข้าขาออก
 
-    //CheckReq
+    //CheckRep
     private void checkrep(){
-        assert Listbooks != null : "Listbooks is not null";
-        assert Listbooks.size() >= 0 : "Listbooks มากกว่า 0";
-        assert Listbooks.size() <= this.capacity : "มีหนังสือไม่เกิน capacity";
+        assert listBooks != null : "Listbooks is not null";
+        assert listBooks.size() >= 0 : "Listbooks มากกว่า 0";
+        assert listBooks.size() <= this.capacity : "มีหนังสือไม่เกิน capacity";
         Set<String> seen = new HashSet<>();
-        for (String b : Listbooks){ //วนลูปใน Listbooks จนหมด
+        for (String b : listBooks){ //วนลูปใน Listbooks จนหมด
             assert b != null: "ชื่อหนังสือไม่เป็น null";
             assert !b.isEmpty(): "หนังสือว่าง";
             assert b.length() <= 100: "ชื่อหนังสือความยาวเกิน 100 ตัวอักษร";
@@ -50,40 +50,78 @@ public class BoundedStack {
      * 
      * @throws IllegalArgumentException 
      */
-public BoundedStack(int capacity){
-        this.Listbooks = new ArrayList<>();
+    public BoundedStack(int capacity){
+        this.listBooks = new ArrayList<>();
         this.capacity = capacity;
+    }
 
+    //ตัวที่สอง
+    private BoundedStack(List<String> list, int capacity) {
+        this.listBooks = new ArrayList<>(list); 
+        this.capacity = capacity;
+        checkrep(); // ตรวจสอบความถูกต้องของข้อมูลตาม RI
     }
 
     // ----- Mutators -----
     /**
      * 
-     * @param s books ไม่เป็น null, ไม่เป็นสตริงว่าง 
+     * @param b  หนังสือไม่เป็น null, ไม่เป็นสตริงว่าง และความยาวไม่เกิน 100 ตัวอักษร
      * @return true ถ้าเพิ่มสำเร็จ, false ถ้าชั้นหนังสือเต็มหรือมีหนังสือนี้อยู่แล้ว
-     * @throws IIllegalArgumentException ถ้า 
+     * @throws IllegalArgumentException ถ้าหนังสือเป็น null , สตริงว่าง และความยาวเกิน100ตัวอักษร
      */
-    public void push(String s){
-
+    public boolean push(String b){
+        //if(b == null || b.isEmpty()) throw new IllegalArgumentException();
+        return false;
     }
 
     /**
+     * นำหนังสือที่เอาเข้าล่าสุดออก
      * 
-     * @param s
+     * @return หนังสือที่ถูกเอาออก
+     * @throws IllegalArgumentException
      */
     public void pop(){
 
     }
 
     // ----- Observers -----
+    
+    /**
+     * คืนค่าจำนวนหนังสือใน listBooks
+     * 
+     */
+    public int size(){
+        return null;
+    }
 
-
-
+    /**
+     * ตรวจสอบว่ามีชื่อหนังสือมั้ย
+     * 
+     * 
+     */
+    public boolean contain(String book){
+        /*return listBooks.contains(book);*/
+        return null;
+    }
 
 
 
     // ----- Producers -----
 
+    /**
+     * 
+     * @return ลิสต์หนังสือที่กลับลำดับ
+     */
+    public BoundedStack reverse(){
+        /*List<String> copy = new ArrayList<>(listBooks);
+        Collections.reverse(copy);
+        return new BoundedStack(copy,this.capacity);*/
+        return null;
+    }
 
+    /*@Override
+    public String toString() {
+        return listBooks.toString();
+    }*/
 
 }

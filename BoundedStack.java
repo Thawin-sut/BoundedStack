@@ -91,7 +91,7 @@ public class BoundedStack {
      * 
      */
     public int size(){
-        return null;
+        return -1;
     }
 
     /**
@@ -101,7 +101,7 @@ public class BoundedStack {
      */
     public boolean contain(String book){
         /*return listBooks.contains(book);*/
-        return null;
+        return false;
     }
 
 

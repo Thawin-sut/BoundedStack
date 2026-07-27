@@ -24,7 +24,26 @@ public class BoundedStackTest {
                     + " - re-run with: java -ea PlaylistTest\n");
         }
 
+        System.out.println("Program Test");
 
+
+
+
+        System.out.println("\n=== Summary ===");
+        System.out.println("Passed: " + passed);
+        System.out.println("Failed: " + failed);
+        System.out.println("Total : " + (passed + failed));
+        System.out.println(failed == 0 ? "ALL TESTS PASSED" : "SOME TESTS FAILED");
+
+        if (failed > 0) {
+            System.exit(1);
+        }
+        
         
     }
+
+    private static void testCreator(){
+        System.out.println("Creator");   
+    }
+
 }

@@ -26,7 +26,7 @@ public class BoundedStackTest {
 
         System.out.println("Program Test");
 
-
+        testCreator();
 
 
         System.out.println("\n=== Summary ===");
@@ -44,6 +44,10 @@ public class BoundedStackTest {
 
     private static void testCreator(){
         System.out.println("Creator");   
+
+        BoundedStack empty = new BoundedStack(50);
+        check("new() -> empty", empty.size() == 0);
+        check("new() -> contains nothing", !empty.contain("anything"));
     }
 
 }

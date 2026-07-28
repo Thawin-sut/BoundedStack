@@ -56,7 +56,7 @@ public class BoundedStack {
     }
 
     //ตัวที่สอง
-    private BoundedStack(List<String> list, int capacity) {
+    public BoundedStack(List<String> list, int capacity) {
         this.listBooks = new ArrayList<>(list); 
         this.capacity = capacity;
         checkrep(); // ตรวจสอบความถูกต้องของข้อมูลตาม RI
@@ -81,7 +81,7 @@ public class BoundedStack {
      * @throws IllegalArgumentException
      */
     public void pop(){
-
+        
     }
 
     // ----- Observers -----

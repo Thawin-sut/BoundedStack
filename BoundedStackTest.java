@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class BoundedStackTest { 
@@ -48,6 +49,37 @@ public class BoundedStackTest {
         BoundedStack empty = new BoundedStack(50);
         check("new() -> empty", empty.size() == 0);
         check("new() -> contains nothing", !empty.contain("anything"));
+
+        check("new() -> push book", empty.push("A"));
+        check("new() -> push book", empty.push("B"));
+        check("new() -> push book", empty.push("C"));
+        check("new() -> size 3 ", empty.size() == 3);
+        check("new() -> contains A", empty.contain("A"));
+        //check("new() -> pop book", empty.pop());
+
+        BoundedStack b = new BoundedStack(Arrays.asList("A","B","C","D"),50);
+        check("new() -> size 4", b.size()==4);
+
+        
+        /*while (true) {
+            BoundedStack bookCheck = new BoundedStack(10);
+            bookCheck.push("A"); bookCheck.push("B"); bookCheck.push("C");
+            /*for(int i=0;i< bookCheck.size(); i++){
+                System.out.println(bookCheck[i]);
+            }
+           System.out.println(bookCheck);
+           break;
+        }*/
+
+
+        // input ผิด
+        /*boolean throwDup = false;
+        try {
+            new BoundedStack(50);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }*/
     }
 
 }

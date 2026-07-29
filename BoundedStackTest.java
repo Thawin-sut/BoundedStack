@@ -43,19 +43,13 @@ public class BoundedStackTest {
         
     }
 
+    // --- Creator : ว่าง / มีหนังสือ / input ที่ผิดเงื่อนไข
     private static void testCreator(){
         System.out.println("Creator");   
 
         BoundedStack empty = new BoundedStack(50);
         check("new() -> empty", empty.size() == 0);
         check("new() -> contains nothing", !empty.contain("anything"));
-
-        check("new() -> push book", empty.push("A"));
-        check("new() -> push book", empty.push("B"));
-        check("new() -> push book", empty.push("C"));
-        check("new() -> size 3 ", empty.size() == 3);
-        check("new() -> contains A", empty.contain("A"));
-        //check("new() -> pop book", empty.pop());
 
         BoundedStack b = new BoundedStack(Arrays.asList("A","B","C","D"),50);
         check("new() -> size 4", b.size()==4);
@@ -67,17 +61,59 @@ public class BoundedStackTest {
         BoundedStack fromEmpty = new BoundedStack(Arrays.asList(), 50);
         check("new(empty list) -> empty", fromEmpty.size() == 0);
         
-        
 
-
-        // input ผิด
-        /*boolean throwDup = false;
+        //input ที่ผิดเงื่อนไขต้องติด exception
+        boolean threwDup = false;
         try {
-            new BoundedStack(50);
+            new BoundedStack(Arrays.asList("A","A"),50);
 
-        } catch (Exception e) {
-            // TODO: handle exception
-        }*/
+        } catch (IllegalArgumentException e) {
+            threwDup = true;
+        }
+        check("new(duplicates) -> throws IllegalArgumentException", threwDup);
+
+        boolean threwNull = false;
+        try {
+            new BoundedStack(Arrays.asList("A",null),50);
+        } catch (IllegalArgumentException e) {
+            threwNull = true;
+        }
+        check("new(listBooks with null) -> throws IllegalArgumentException", threwNull);
+
+        boolean threwNullList = false;
+        try {
+            new BoundedStack(Arrays.asList(),50);
+        } catch (IllegalArgumentException e) {
+            threwNullList = true;
+        }
+        check("new(null) -> throws IllegalArgumentException", threwNullList);
     }
 
+    // --- Mutator : push ต้องรักษาลำดับและห้ามหนังสือซ้ำ
+    private static void testPush(){
+        System.out.println("\n--- Push ---");
+
+        BoundedStack b = new BoundedStack(50);
+        check("add(A) -> return true", b.push("A"));
+        check("add(B) -> return true", b.push("B"));
+        check("add(A,B) -> size 2", b.size() == 2);
+        check("add(B) -> found by contains", b.contain("B"));
+
+        b.push("C");
+        check("push preserves insertion order", b.book().equals(Arrays.asList("A","B","C")));
+
+        //เพลงซ้ำ คืน false
+        check("push duplicate -> returns false ", !b.push("A"));
+        check("failed push leaves size unchanged", b.size() == 3);
+
+
+
+    }
+
+    // --- Mutator : pop ทั้งกรณีพบและไม่พบ
+    private static void testPop(){
+        System.out.println("\n--- Pop ---");
+
+        
+    }
 }

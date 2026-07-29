@@ -94,10 +94,10 @@ public class BoundedStackTest {
         System.out.println("\n--- Push ---");
 
         BoundedStack b = new BoundedStack(50);
-        check("add(A) -> return true", b.push("A"));
-        check("add(B) -> return true", b.push("B"));
-        check("add(A,B) -> size 2", b.size() == 2);
-        check("add(B) -> found by contains", b.contain("B"));
+        check("push(A) -> return true", b.push("A"));
+        check("push(B) -> return true", b.push("B"));
+        check("push(A,B) -> size 2", b.size() == 2);
+        check("push(B) -> found by contains", b.contain("B"));
 
         b.push("C");
         check("push preserves insertion order", b.book().equals(Arrays.asList("A","B","C")));
@@ -127,19 +127,41 @@ public class BoundedStackTest {
 
         //boundary : เติมจนเต็มแล้วเติมเพิ่ม
         BoundedStack full = new BoundedStack(50);
-        for (int i = 0 ; i < full.size();i++){
+        for (int i = 0 ; i < full.capacity();i++){
             full.push("book"+i);
         }
-        check("can fill up to capacity", full.size() == full.size());
+        check("can fill up to capacity", full.size() == full.capacity());
         check("push when full -> returns false", !full.push("one more"));
-        check("full listBooks stays at capacity",
-                full.size() == full.size());
+        check("full books stays at capacity",
+                full.size() == full.capacity());
     }
 
     // --- Mutator : pop ทั้งกรณีพบและไม่พบ
     private static void testPop(){
         System.out.println("\n--- Pop ---");
 
+        BoundedStack b = new BoundedStack(Arrays.asList("A", "B", "C"),50);
+        check("pop() -> returns true", b.pop());
+        check("pop -> size decreases", b.size() == 2);
+        check("pop -> book is gone", !b.contain("C"));
+        check("pop keeps the others in order",
+                b.book().equals(Arrays.asList("A", "B")));
+        
+        // ลบหนังสือที่ไม่มี — คืน false เฉย ๆ
+        check("pop on empty BoundedStack -> returns false", !b.pop());
+        check("failed pop leaves size unchanged", b.size() == 2);
 
+        // boundary : ลบจนหมด
+        b.pop();
+        b.pop();
+        check("pop all -> empty", b.size() == 0);
+        check("pop on empty BoundedStack -> returns false", !b.pop());
+    }
+
+    // --- Observer ต้องไม่มี side effect ---
+    private static void testObserver() {
+        System.out.println("\n--- Observer ---");
+
+        
     }
 }

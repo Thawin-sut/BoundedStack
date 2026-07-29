@@ -28,7 +28,10 @@ public class BoundedStackTest {
         System.out.println("Program Test");
 
         testCreator();
-
+        testPush();
+        testPop();
+        testObserver();
+        testProducer();
 
         System.out.println("\n=== Summary ===");
         System.out.println("Passed: " + passed);
@@ -49,11 +52,11 @@ public class BoundedStackTest {
 
         BoundedStack empty = new BoundedStack(50);
         check("new() -> empty", empty.size() == 0);
-        check("new() -> contains nothing", !empty.contain("anything"));
+        check("new() -> contains nothing", !empty.contains("anything"));
 
         BoundedStack b = new BoundedStack(Arrays.asList("A","B","C","D"),50);
         check("new() -> size 4", b.size()==4);
-        check("new() -> contain D", b.contain("D"));
+        check("new() -> contain D", b.contains("D"));
         check("new() -> preserves order", 
                 b.book().equals(Arrays.asList("A","B","C","D")));
 
@@ -97,7 +100,7 @@ public class BoundedStackTest {
         check("push(A) -> return true", b.push("A"));
         check("push(B) -> return true", b.push("B"));
         check("push(A,B) -> size 2", b.size() == 2);
-        check("push(B) -> found by contains", b.contain("B"));
+        check("push(B) -> found by contains", b.contains("B"));
 
         b.push("C");
         check("push preserves insertion order", b.book().equals(Arrays.asList("A","B","C")));
@@ -143,7 +146,7 @@ public class BoundedStackTest {
         BoundedStack b = new BoundedStack(Arrays.asList("A", "B", "C"),50);
         check("pop() -> returns true", b.pop());
         check("pop -> size decreases", b.size() == 2);
-        check("pop -> book is gone", !b.contain("C"));
+        check("pop -> book is gone", !b.contains("C"));
         check("pop keeps the others in order",
                 b.book().equals(Arrays.asList("A", "B")));
         
@@ -162,6 +165,50 @@ public class BoundedStackTest {
     private static void testObserver() {
         System.out.println("\n--- Observer ---");
 
+        BoundedStack b = new BoundedStack(Arrays.asList("A", "B"), 50);
+        check("size reports 2", b.size() == 2);
+        check("contains finds an existing book", b.contains("A"));
+        check("contains rejects a missing book", !b.contains("Z"));
+        check("songs returns the full list in order",
+                b.book().equals(Arrays.asList("A", "B")));
+
+        int before = b.size();
+        b.size();
+        b.contains("A");
+        b.book();
+        check("observers have no side effects", b.size() == before);
+    }
+
+    // --- Producer ต้องคืนตัวใหม่ ไม่แก้ตัวเดิม ---
+    private static void testProducer() {
+        System.out.println("\n--- Producer (shuffled) ---");
+
+        BoundedStack original = new BoundedStack(Arrays.asList("A", "B", "C", "D"),50);
+        BoundedStack reverse = original.reverse();
+
+        check("reverse has the same size", reverse.size() == original.size());
+
+        List<String> a = new ArrayList<String>(original.book());
+        List<String> b = new ArrayList<String>(reverse.book());
+        Collections.sort(a);
+        Collections.sort(b);
+        check("reverse contains exactly the same book", a.equals(b));
+
+        check("reverse does not mutate the original",
+                original.book().equals(Arrays.asList("A", "B", "C", "D")));
+
+        // mutate ตัวใหม่ต้องไม่กระทบตัวเดิม
+        reverse.push("E");
+        check("mutating the result does not affect the original",
+                original.size() == 4);
+
+        // boundary: shuffle เพลย์ลิสต์ว่างต้องไม่พัง
+        BoundedStack emptyReverse = new BoundedStack(50).reverse();
+        check("reverse an empty listBooks is safe", emptyReverse.size() == 0);
+    }
+
+    // --- ทดสอบว่าไม่เกิด representation exposure ---
+    private static void testExposure() {
         
     }
 }

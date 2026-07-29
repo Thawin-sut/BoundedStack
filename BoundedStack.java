@@ -71,7 +71,7 @@ public class BoundedStack {
      * @throws IllegalArgumentException ถ้าหนังสือเป็น null , สตริงว่าง และความยาวเกิน100ตัวอักษร
      */
     public boolean push(String b){
-        //if(b == null || b.isEmpty()) throw new IllegalArgumentException();
+        if(b == null || b.isEmpty()) throw new IllegalArgumentException();
         return false;
     }
 
@@ -82,7 +82,7 @@ public class BoundedStack {
      * @throws IllegalArgumentException
      */
     public boolean pop(){
-        return false;
+        return true;
     }
 
     // ----- Observers -----
@@ -92,7 +92,7 @@ public class BoundedStack {
      * 
      */
     public int size(){
-        return -1;
+        return listBooks.size();
     }
 
     /**
@@ -101,37 +101,38 @@ public class BoundedStack {
      * 
      */
     public boolean contains(String book){
-        /*return listBooks.contains(book);*/
-        return false;
+        return listBooks.contains(book);
     }
 
     /**
      * 
-     * @return
+     * @return คืนค่าพื้นที่เก็บของชั้นหนังสือ
      */
     public int capacity() {
-        return capacity;
+        return this.capacity;
     }  
 
     /**
      * 
-     * @return
+     * @return  คืนชื่อหนังสือทั้งหมดตามลำดับ
+     * 
+     * ระวัง ห้ามคืน reference ของ books ตรง ๆ
      */
     public List<String> book(){
-        return null;
+        return new ArrayList<>(listBooks);
     }
 
     // ----- Producers -----
 
     /**
+     * ระวัง ห้ามแก้ list เดิม
      * 
      * @return ลิสต์หนังสือที่กลับลำดับ
      */
     public BoundedStack reverse(){
-        /*List<String> copy = new ArrayList<>(listBooks);
+        List<String> copy = new ArrayList<>(listBooks);
         Collections.reverse(copy);
-        return new BoundedStack(copy,this.capacity);*/
-        return null;
+        return new BoundedStack(copy,this.capacity);
     }
 
     /*@Override

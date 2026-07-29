@@ -145,7 +145,7 @@ public class BoundedStackTest {
         System.out.println("\n--- Pop ---");
 
         BoundedStack b = new BoundedStack(Arrays.asList("A", "B", "C"),50);
-        check("pop() -> returns true", b.pop());
+        check("pop() -> return true", b.pop());
         check("pop -> size decreases", b.size() == 2);
         check("pop -> book is gone", !b.contains("C"));
         check("pop keeps the others in order",
@@ -182,7 +182,7 @@ public class BoundedStackTest {
 
     // --- Producer ต้องคืนตัวใหม่ ไม่แก้ตัวเดิม ---
     private static void testProducer() {
-        System.out.println("\n--- Producer (shuffled) ---");
+        System.out.println("\n--- Producer (reverse) ---");
 
         BoundedStack original = new BoundedStack(Arrays.asList("A", "B", "C", "D"),50);
         BoundedStack reverse = original.reverse();

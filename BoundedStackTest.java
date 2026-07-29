@@ -106,14 +106,40 @@ public class BoundedStackTest {
         check("push duplicate -> returns false ", !b.push("A"));
         check("failed push leaves size unchanged", b.size() == 3);
 
+        //input ผิดเงื่อนไข ติด Exception
+        boolean threwEmpty = true;
+        try {
+            b.push("");
+        } catch (IllegalArgumentException e) {
+            threwEmpty = true;
+        }
+        check("push(empty string) -> throws IllegalArgumentException", threwEmpty);
 
+        boolean threwNull = false;
+        try {
+            b.push(null);
+        } catch (IllegalArgumentException e) {
+            threwNull = true;
+        }
+        check("push(null) -> throws IllegalArgumentException", threwNull);
 
+        check("failed adds leave playlist unchanged", b.size() == 3);
+
+        //boundary : เติมจนเต็มแล้วเติมเพิ่ม
+        BoundedStack full = new BoundedStack(50);
+        for (int i = 0 ; i < full.size();i++){
+            full.push("book"+i);
+        }
+        check("can fill up to capacity", full.size() == full.size());
+        check("push when full -> returns false", !full.push("one more"));
+        check("full listBooks stays at capacity",
+                full.size() == full.size());
     }
 
     // --- Mutator : pop ทั้งกรณีพบและไม่พบ
     private static void testPop(){
         System.out.println("\n--- Pop ---");
 
-        
+
     }
 }

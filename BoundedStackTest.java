@@ -32,6 +32,7 @@ public class BoundedStackTest {
         testPop();
         testObserver();
         testProducer();
+        testExposure();
 
         System.out.println("\n=== Summary ===");
         System.out.println("Passed: " + passed);
@@ -209,6 +210,31 @@ public class BoundedStackTest {
 
     // --- ทดสอบว่าไม่เกิด representation exposure ---
     private static void testExposure() {
+        System.out.println("\n-- Representation Exposure --");
+
+        // ขาออก: แก้ list ที่ได้จาก songs() ต้องไม่กระทบ rep
+        BoundedStack b = new BoundedStack(50);
+        b.push("A");
+
+        List<String> got = b.book();
+        got.clear();
+        check("clearing result of book() does not affect listBooks",
+                b.size() == 1);
         
+        // สองครั้งต้องเป็นคนละ object
+        check("book() returns a fresh list each call",
+                b.book() != b.book());
+
+        // ขาเข้า: แก้ list ที่ส่งให้ constructor ต้องไม่กระทบ rep
+        List<String> input = new ArrayList<String>(Arrays.asList("A", "B"));
+        BoundedStack p = new BoundedStack(input,50);
+
+        input.clear();
+        check("clearing constructor argument does not affect listBooks",
+                p.size() == 2);
+
+        input.add("injected");
+        check("adding to constructor argument does not affect listBooks",
+                !p.contains("injected"));
     }
 }

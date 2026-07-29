@@ -59,17 +59,15 @@ public class BoundedStackTest {
 
         BoundedStack b = new BoundedStack(Arrays.asList("A","B","C","D"),50);
         check("new() -> size 4", b.size()==4);
+        check("new() -> contain D", b.contain("D"));
+        check("new() -> preserves order", 
+                b.book().equals(Arrays.asList("A","B","C","D")));
 
+        //boundary : list ว่าง
+        BoundedStack fromEmpty = new BoundedStack(Arrays.asList(), 50);
+        check("new(empty list) -> empty", fromEmpty.size() == 0);
         
-        /*while (true) {
-            BoundedStack bookCheck = new BoundedStack(10);
-            bookCheck.push("A"); bookCheck.push("B"); bookCheck.push("C");
-            /*for(int i=0;i< bookCheck.size(); i++){
-                System.out.println(bookCheck[i]);
-            }
-           System.out.println(bookCheck);
-           break;
-        }*/
+        
 
 
         // input ผิด

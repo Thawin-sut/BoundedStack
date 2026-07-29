@@ -104,7 +104,9 @@ public class BoundedStack {
         return false;
     }
 
-
+    public List<String> book(){
+        return null;
+    }
 
     // ----- Producers -----
 

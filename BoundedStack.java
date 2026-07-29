@@ -54,6 +54,7 @@ public class BoundedStack {
         this.listBooks = new ArrayList<>();
         this.capacity = capacity;
     }
+ 
 
     //ตัวที่สอง
     public BoundedStack(List<String> list, int capacity) {
@@ -80,8 +81,8 @@ public class BoundedStack {
      * @return หนังสือที่ถูกเอาออก
      * @throws IllegalArgumentException
      */
-    public void pop(){
-        
+    public boolean pop(){
+        return false;
     }
 
     // ----- Observers -----
@@ -104,6 +105,18 @@ public class BoundedStack {
         return false;
     }
 
+    /**
+     * 
+     * @return
+     */
+    public int capacity() {
+        return capacity;
+    }  
+
+    /**
+     * 
+     * @return
+     */
     public List<String> book(){
         return null;
     }

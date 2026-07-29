@@ -100,7 +100,7 @@ public class BoundedStack {
      * 
      * 
      */
-    public boolean contain(String book){
+    public boolean contains(String book){
         /*return listBooks.contains(book);*/
         return false;
     }

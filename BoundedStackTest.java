@@ -86,7 +86,7 @@ public class BoundedStackTest {
 
         boolean threwNullList = false;
         try {
-            new BoundedStack(Arrays.asList(),50);
+            new BoundedStack(null,50);
         } catch (IllegalArgumentException e) {
             threwNullList = true;
         }
@@ -111,7 +111,7 @@ public class BoundedStackTest {
         check("failed push leaves size unchanged", b.size() == 3);
 
         //input ผิดเงื่อนไข ติด Exception
-        boolean threwEmpty = true;
+        boolean threwEmpty = false;
         try {
             b.push("");
         } catch (IllegalArgumentException e) {

@@ -60,11 +60,15 @@ public class BoundedStack {
     }
  
 
-    // Creator ตัวที่สอง
     /**
+     * Creator ตัวที่สอง
      * 
-     * @param list รายชื่อหนังสือ
-     * @param capacity พื้นที่เก็บสูงสุดของ listBooks
+     * สร้าง listBooks จากรายชื่อหนังสือที่ให้มา
+     * 
+     * ระวัง: ห้ามเก็บ reference ของ list ตรง ๆ (rep exposure!)
+     * 
+     * @param list รายชื่อหนังสือ ต้องผิดเงืื่อนไข 
+     * @param capacity พื้นที่เก็บสูงสุดของ listBooks ไม่น้อยกว่า 0
      * @throws IllegalArgumentException ถ้า list ผิดเงื่อนไข
      */
     public BoundedStack(List<String> list, int capacity) {

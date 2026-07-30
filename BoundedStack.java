@@ -47,9 +47,10 @@ public class BoundedStack {
     // ----- Creator -----
 
     /**
+     * สร้าง BoundedStack ว่าง
      * 
-     * 
-     * สร้าง listBooks ว่าง
+     * @param capacity พื้นที่เก็บสูงสุดของ listBooks
+     * @throws IllegalArgumentException ถ้า capacity < 0
      */
     public BoundedStack(int capacity){
         if (capacity < 0) throw new IllegalArgumentException();
@@ -64,7 +65,7 @@ public class BoundedStack {
      * 
      * @param list รายชื่อหนังสือ
      * @param capacity พื้นที่เก็บสูงสุดของ listBooks
-     * @throws IllegalArgumentException ถ้า list เป็น null, พื้นที่เก็บน้อยกว่า 0
+     * @throws IllegalArgumentException ถ้า list ผิดเงื่อนไข
      */
     public BoundedStack(List<String> list, int capacity) {
         if (list == null) throw new IllegalArgumentException();
@@ -85,7 +86,7 @@ public class BoundedStack {
     // ----- Mutators -----
     /**
      * 
-     * @param b  หนังสือไม่เป็น null, ไม่เป็นสตริงว่าง และความยาวไม่เกิน 100 ตัวอักษร
+     * @param b  หนังสือ ต้องไม่เป็น null, ไม่เป็นสตริงว่าง และความยาวไม่เกิน 100 ตัวอักษร
      * @return true ถ้าเพิ่มสำเร็จ, false ถ้าชั้นหนังสือเต็มหรือมีหนังสือนี้อยู่แล้ว
      * @throws IllegalArgumentException ถ้าหนังสือเป็น null , สตริงว่าง และความยาวเกิน100ตัวอักษร
      */
@@ -100,7 +101,7 @@ public class BoundedStack {
     /**
      * นำหนังสือที่เอาเข้าล่าสุดออก
      * 
-     * @return true ถ้าหนังสือถูกเอาออก 
+     * @return true ถ้าหนังสือถูกเอาออก , false ถ้า listBooks ว่าง
      * 
      */
     public boolean pop(){
@@ -130,7 +131,7 @@ public class BoundedStack {
     }
 
     /**
-     * คืนค่าจำนวนหนังสือทั้งหมด
+     * คืนค่าพื้นที่เก็บหนังสือทั้งหมด
      * 
      */
     public int capacity() {

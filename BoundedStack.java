@@ -30,9 +30,9 @@ public class BoundedStack {
     //  คัดลอกข้อมูลทั้งขาเข้าขาออก
 
     //CheckRep
-    private void checkrep(){
-        assert listBooks != null : "Listbooks is not null";
-        assert listBooks.size() >= 0 : "Listbooks มากกว่า 0";
+    private void checkRep(){
+        assert listBooks != null : "listBooks is not null";
+        //assert listBooks.size() >= 0 : "listBooks มากกว่าเท่ากับ 0";
         assert listBooks.size() <= this.capacity : "มีหนังสือไม่เกิน capacity";
         Set<String> seen = new HashSet<>();
         for (String b : listBooks){ //วนลูปใน Listbooks จนหมด
@@ -41,6 +41,7 @@ public class BoundedStack {
             assert b.length() <= 100: "ชื่อหนังสือความยาวเกิน 100 ตัวอักษร";
             assert seen.add(b) : "ชื่อหนังสือซ้ำ : " + b; //วนเก็บหนังสือเรื่อยๆ ถ้าเจอซ้ำคือ false
         }
+        assert capacity >= 0 : "capacity มากกว่าเท่ากับ 0";
     }
 
     // ----- Creator -----
@@ -48,20 +49,37 @@ public class BoundedStack {
     /**
      * 
      * 
-     * @throws IllegalArgumentException 
+     * สร้าง listBooks ว่าง
      */
     public BoundedStack(int capacity){
+        if (capacity < 0) throw new IllegalArgumentException();
         this.listBooks = new ArrayList<>();
         this.capacity = capacity;
-        checkrep();
+        checkRep();
     }
  
 
-    //ตัวที่สอง
+    // Creator ตัวที่สอง
+    /**
+     * 
+     * @param list รายชื่อหนังสือ
+     * @param capacity พื้นที่เก็บของ listBooks
+     * @throws IllegalArgumentException ถ้า list เป็น null, พื้นที่เก็บน้อยกว่า 0
+     */
     public BoundedStack(List<String> list, int capacity) {
+        if (list == null) throw new IllegalArgumentException();
+        if (capacity < 0) throw new IllegalArgumentException();
+        if (list.size() > capacity) throw new IllegalArgumentException();
+        Set<String> seen = new HashSet<>();
+        for (String s : list){
+            if(s == null) throw new IllegalArgumentException();
+            if(s.isEmpty()) throw new IllegalArgumentException();
+            if (s.length() > 100) throw new IllegalArgumentException();
+            if(!seen.add(s)) throw new IllegalArgumentException();
+        }
         this.listBooks = new ArrayList<>(list); 
         this.capacity = capacity;
-        checkrep(); // ตรวจสอบความถูกต้องของข้อมูลตาม RI
+        checkRep(); // ตรวจสอบความถูกต้องของข้อมูลตาม RI
     }
 
     // ----- Mutators -----
@@ -75,7 +93,7 @@ public class BoundedStack {
         if(b == null || b.isEmpty() || b.length() > 100) throw new IllegalArgumentException();
         if(listBooks.contains(b) || listBooks.size() == this.capacity) return false;
         listBooks.add(b);
-        checkrep();
+        checkRep();
         return true;
     }
 
@@ -86,9 +104,9 @@ public class BoundedStack {
      * 
      */
     public boolean pop(){
-        if(listBooks.isEmpty()) return false;
+        if(listBooks.isEmpty()) return false;   
         listBooks.remove(listBooks.size()-1);
-        checkrep();
+        checkRep();
         return true;
     }
 
@@ -112,7 +130,7 @@ public class BoundedStack {
     }
 
     /**
-     * 
+     * คืนค่าจำนวนหนังสือทั้งหมด
      * 
      */
     public int capacity() {

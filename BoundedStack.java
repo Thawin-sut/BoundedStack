@@ -67,7 +67,7 @@ public class BoundedStack {
      * 
      * ระวัง: ห้ามเก็บ reference ของ list ตรง ๆ (rep exposure!)
      * 
-     * @param list รายชื่อหนังสือ ต้องผิดเงืื่อนไข 
+     * @param list รายชื่อหนังสือ ต้องไม่เท่ากับ null , ไม่เป็นสตริงว่าง ,หนังสือไม่ซ้ำ และไม่เกิน 100 ตัวอักษร
      * @param capacity พื้นที่เก็บสูงสุดของ listBooks ไม่น้อยกว่า 0
      * @throws IllegalArgumentException ถ้า list ผิดเงื่อนไข
      */

@@ -98,7 +98,7 @@ public class BoundedStackTest {
         } catch (IllegalArgumentException e) {
             threwCapacity = true;
         }
-        check("new(negative capacity) -> throws", threwCapacity);
+        check("new(negative capacity) -> throws IllegalArgumentException", threwCapacity);
 
         boolean threwTooMany = false;
         try {
@@ -106,7 +106,23 @@ public class BoundedStackTest {
         } catch (IllegalArgumentException e) {
             threwTooMany = true;
         }
-        check("new(list bigger than capacity) -> throws", threwTooMany);
+        check("new(list bigger than capacity) -> throws IllegalArgumentException", threwTooMany);
+
+        boolean threwEmpty = false;
+        try {
+            new BoundedStack(Arrays.asList("A",""), 50);
+        } catch (IllegalArgumentException e) {
+            threwEmpty = true;
+        }
+        check("new(empty string) -> throws IllegalArgumentException", threwEmpty);
+
+        boolean threwLongNameBook = false;
+        try {
+            new BoundedStack(Arrays.asList("A","A".repeat(101)), 50);
+        } catch (IllegalArgumentException e) {
+            threwLongNameBook = true;
+        }
+        check("new(long name) -> throws IllegalArgumentException", threwLongNameBook);
     }
 
     // --- Mutator : push ต้องรักษาลำดับและห้ามหนังสือซ้ำ
@@ -189,7 +205,7 @@ public class BoundedStackTest {
         check("size reports 2", b.size() == 2);
         check("contains finds an existing book", b.contains("A"));
         check("contains rejects a missing book", !b.contains("Z"));
-        check("songs returns the full list in order",
+        check("book returns the full list in order",
                 b.book().equals(Arrays.asList("A", "B")));
 
         int before = b.size();
@@ -225,7 +241,7 @@ public class BoundedStackTest {
         check("mutating the result does not affect the original",
                 original.size() == 4);
 
-        // boundary: shuffle เพลย์ลิสต์ว่างต้องไม่พัง
+        // boundary: reverse เพลย์ลิสต์ว่างต้องไม่พัง  
         BoundedStack emptyReverse = new BoundedStack(50).reverse();
         check("reverse an empty listBooks is safe", emptyReverse.size() == 0);
     }
@@ -234,7 +250,7 @@ public class BoundedStackTest {
     private static void testExposure() {
         System.out.println("\n-- Representation Exposure --");
 
-        // ขาออก: แก้ list ที่ได้จาก songs() ต้องไม่กระทบ rep
+        // ขาออก: แก้ list ที่ได้จาก books() ต้องไม่กระทบ rep
         BoundedStack b = new BoundedStack(50);
         b.push("A");
 

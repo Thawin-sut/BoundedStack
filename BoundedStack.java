@@ -52,19 +52,31 @@ public class BoundedStack {
      * สร้าง listBooks ว่าง
      */
     public BoundedStack(int capacity){
+        if (capacity < 0) throw new IllegalArgumentException();
         this.listBooks = new ArrayList<>();
         this.capacity = capacity;
         checkRep();
     }
  
 
-    //ตัวที่สอง
+    // Creator ตัวที่สอง
     /**
      * 
-     * @param list
-     * @param capacity
+     * @param list รายชื่อหนังสือ
+     * @param capacity พื้นที่เก็บสูงสุดของ listBooks
+     * @throws IllegalArgumentException ถ้า list เป็น null, พื้นที่เก็บน้อยกว่า 0
      */
     public BoundedStack(List<String> list, int capacity) {
+        if (list == null) throw new IllegalArgumentException();
+        if (capacity < 0) throw new IllegalArgumentException();
+        if (list.size() > capacity) throw new IllegalArgumentException();
+        Set<String> seen = new HashSet<>();
+        for (String s : list){
+            if(s == null) throw new IllegalArgumentException();
+            if(s.isEmpty()) throw new IllegalArgumentException();
+            if (s.length() > 100) throw new IllegalArgumentException();
+            if(!seen.add(s)) throw new IllegalArgumentException();
+        }
         this.listBooks = new ArrayList<>(list); 
         this.capacity = capacity;
         checkRep(); // ตรวจสอบความถูกต้องของข้อมูลตาม RI
@@ -118,7 +130,7 @@ public class BoundedStack {
     }
 
     /**
-     * 
+     * คืนค่าจำนวนหนังสือทั้งหมด
      * 
      */
     public int capacity() {

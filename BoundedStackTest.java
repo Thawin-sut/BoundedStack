@@ -91,6 +91,22 @@ public class BoundedStackTest {
             threwNullList = true;
         }
         check("new(null) -> throws IllegalArgumentException", threwNullList);
+
+        boolean threwCapacity = false;
+        try {
+            new BoundedStack(-1);
+        } catch (IllegalArgumentException e) {
+            threwCapacity = true;
+        }
+        check("new(negative capacity) -> throws", threwCapacity);
+
+        boolean threwTooMany = false;
+        try {
+            new BoundedStack(Arrays.asList("A","B","C"),2);
+        } catch (IllegalArgumentException e) {
+            threwTooMany = true;
+        }
+        check("new(list bigger than capacity) -> throws", threwTooMany);
     }
 
     // --- Mutator : push ต้องรักษาลำดับและห้ามหนังสือซ้ำ

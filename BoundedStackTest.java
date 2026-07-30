@@ -143,17 +143,24 @@ public class BoundedStackTest {
         }
         check("push(null) -> throws IllegalArgumentException", threwNull);
 
-        check("failed adds leave playlist unchanged", b.size() == 3);
+        boolean threwLongName = false;
+        try {
+            b.push("A".repeat(101));
+        } catch (IllegalArgumentException e) {
+            threwLongName = true;
+        }
+        check("push(long name) -> throws IllegalArgumentException", threwLongName);
+
+        check("failed push leave listBooks unchanged", b.size() == 3);
 
         //boundary : เติมจนเต็มแล้วเติมเพิ่ม
         BoundedStack full = new BoundedStack(50);
         for (int i = 0 ; i < full.capacity();i++){
             full.push("book"+i);
         }
-        check("can fill up to capacity", full.size() == full.capacity());
+        check("can fill up to capacity", full.size() == full.capacity()); 
         check("push when full -> returns false", !full.push("one more"));
-        check("full books stays at capacity",
-                full.size() == full.capacity());
+        check("full books stays at capacity", full.size() == full.capacity());
     }
 
     // --- Mutator : pop ทั้งกรณีพบและไม่พบ

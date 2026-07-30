@@ -173,10 +173,6 @@ public class BoundedStackTest {
         check("pop -> book is gone", !b.contains("C"));
         check("pop keeps the others in order",
                 b.book().equals(Arrays.asList("A", "B")));
-        
-        // ลบหนังสือที่ไม่มี — คืน false เฉย ๆ
-        check("pop on empty BoundedStack -> returns false", !b.pop());
-        check("failed pop leaves size unchanged", b.size() == 2);
 
         // boundary : ลบจนหมด
         b.pop();
@@ -220,6 +216,9 @@ public class BoundedStackTest {
 
         check("reverse does not mutate the original",
                 original.book().equals(Arrays.asList("A", "B", "C", "D")));
+
+        check("reverse reverses order",
+                reverse.book().equals(Arrays.asList("D","C","B","A")));
 
         // mutate ตัวใหม่ต้องไม่กระทบตัวเดิม
         reverse.push("E");

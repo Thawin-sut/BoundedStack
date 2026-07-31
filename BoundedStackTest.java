@@ -1,3 +1,4 @@
+//นายธาวิน สุดวิเศษ 6821651370 หมู่ 801
 import java.util.*;
 
 public class BoundedStackTest { 
@@ -137,7 +138,7 @@ public class BoundedStackTest {
         b.push("C");
         check("push preserves insertion order", b.book().equals(Arrays.asList("A","B","C")));
 
-        //เพลงซ้ำ คืน false
+        //หนังสือซ้ำ คืน false
         check("push duplicate -> returns false ", !b.push("A"));
         check("failed push leaves size unchanged", b.size() == 3);
 
